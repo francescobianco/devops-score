@@ -223,8 +223,17 @@
     <p>Creato da Francesco Bianco</p>
 </div>
 
+<script src="assets/js/jsoncrypt.js"></script>
 <script>
     function renderCompanies() {
+
+        jsonCryptFetch('assets/data/companies/01/01.json', '01568725')
+            .then(data => {
+                console.log("data:", data)
+            });
+
+
+
         const container = document.getElementById('companies');
         fetch('assets/data/rank/top3.json')
             .then(response => response.json())
@@ -255,6 +264,9 @@
     }
 
     document.addEventListener('DOMContentLoaded', renderCompanies);
+
+
+
 </script>
 </body>
 </html>

@@ -21,14 +21,34 @@
         return Buffer.from(str, 'base64').toString('binary');
     }
 
-    function jsonCryptFetch(url, key) {
+    function getEncryptedFile(file) {
+        if (file.endsWith('.enc.json')) {
+            return file;
+        } else if (file.endsWith('.dec.json')) {
+            return file.replace('.dec.json', '.enc.json');
+        }
 
-        fetch(url)
-            .then(response => response.json())
-            .then(data => {
-                var json = xorEncryptDecrypt(base64Decode(data), key);
-                return JSON.parse(json);
-            });
+        return file.replace('.json', '.enc.json');
+    }
+
+    function getDecryptedFile(file) {
+        if (file.endsWith('.dec.json')) {
+            return file;
+        } else if (file.endsWith('.enc.json')) {
+            return file.replace('.enc.json', '.dec.json');
+        }
+
+        return file.replace('.json', '.dec.json');
+    }
+
+    function jsonCryptFetch(url, key) {
+        const encryptedFile = getEncryptedFile(url);
+
+        return fetch(encryptedFile).then(response => {
+            const data = response.text()
+            console.log("data", data)
+            return data
+        })
     }
 
     function usage() {
@@ -84,6 +104,6 @@
         }
     } else {
         // Browser
-        global.myFunction = myFunction;
+        global.jsonCryptFetch = jsonCryptFetch;
     }
 })(typeof window !== 'undefined' ? window : global);
