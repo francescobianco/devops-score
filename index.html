@@ -224,14 +224,15 @@
 </div>
 
 <script>
-    const companies = ;
-
     function renderCompanies() {
         const container = document.getElementById('companies');
-        companies.forEach((company, index) => {
-            const companyElement = document.createElement('div');
-            companyElement.className = 'company';
-            companyElement.innerHTML = `
+        fetch('assets/data/rank/top3.json')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach((company, index) => {
+                    const companyElement = document.createElement('div');
+                    companyElement.className = 'company';
+                    companyElement.innerHTML = `
                     <div class="rank">${index + 1}</div>
                     <img src="${company.logo}" alt="${company.name} logo" class="company-logo">
                     <div class="info">
@@ -240,8 +241,9 @@
                     </div>
                     <div class="score">${company.score}</div>
                 `;
-            container.appendChild(companyElement);
-        });
+                    container.appendChild(companyElement);
+                });
+            });
     }
 
     function checkScore() {
