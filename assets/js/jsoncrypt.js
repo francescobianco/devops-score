@@ -14,11 +14,27 @@
     }
 
     function base64Encode(str) {
-        return Buffer.from(str, 'binary').toString('base64');
+        if (typeof Buffer !== 'undefined') {
+            // Siamo in Node.js
+            return Buffer.from(str, 'binary').toString('base64');
+        } else if (typeof btoa !== 'undefined') {
+            // Siamo nel browser
+            return btoa(unescape(encodeURIComponent(str)));
+        } else {
+            throw new Error('Ambiente non supportato per base64Encode');
+        }
     }
 
+    // Funzione per decodificare da base64
     function base64Decode(str) {
-        return Buffer.from(str, 'base64').toString('binary');
+        if (typeof Buffer !== 'undefined') {
+            return Buffer.from(str, 'base64').toString('binary');
+        } else if (typeof atob !== 'undefined') {
+            console.log('atob', str)
+            return decodeURIComponent(escape(atob(str)));
+        } else {
+            throw new Error('Ambiente non supportato per base64Decode');
+        }
     }
 
     function getEncryptedFile(file) {
@@ -44,10 +60,15 @@
     function jsonCryptFetch(url, key) {
         const encryptedFile = getEncryptedFile(url);
 
-        return fetch(encryptedFile).then(response => {
-            const data = response.text()
-            console.log("data", data)
-            return data
+        return fetch(encryptedFile).then(async response => {
+            const data = await response.text()
+            const decryptedData = xorEncryptDecrypt(base64Decode(data), key);
+            console.log("decryptedData", decryptedData)
+            const json = JSON.parse(decryptedData)
+
+            if (typeof json === 'object') {
+                return json
+            }
         })
     }
 
