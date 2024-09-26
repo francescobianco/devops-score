@@ -1,10 +1,10 @@
 (function (global) {
-    function myFunction() {
-        return "Hello from a universal module!";
-    }
-
     function xorEncryptDecrypt(input, key) {
         let output = '';
+
+        if (!key) {
+            key = ''
+        }
 
         for (let i = 0; i < input.length; i++) {
             output += String.fromCharCode(input.charCodeAt(i) ^ key.charCodeAt(i % key.length));
@@ -21,25 +21,62 @@
         return Buffer.from(str, 'base64').toString('binary');
     }
 
+    function jsonCryptFetch(url, key) {
+
+        fetch(url)
+            .then(response => response.json())
+            .then(data => {
+                var json = xorEncryptDecrypt(base64Decode(data), key);
+                return JSON.parse(json);
+            });
+    }
+
+    function usage() {
+        console.error('Usage: node jsoncrypt.js [encrypt|decrypt] <file>');
+        process.exit(1);
+    }
+
     if (typeof module !== 'undefined' && module.exports) {
+        var fs = require('fs');
+        var jsoncrypt = JSON.parse(fs.readFileSync('jsoncrypt.json', 'utf8'));
+
         if (require.main === module) {
             // Node.js as entry point
-            console.log(myFunction());
 
             var args = process.argv.slice(2);
 
             if (args.length < 2) {
-                console.error('Uso: node crypt-url.js <url> <chiave>');
-                process.exit(1);
+                usage();
             }
 
-            var url = args[0];
-            var key = args[1];
+            var command = args[0];
+            var file = args[1];
+            var encryptedFile = file.replace('.dec.json', '.enc.json');
+            var decryptedFile = file.replace('.enc.json', '.dec.json');
+            var key = '';
+            if (command === 'encrypt') {
+                if (!fs.existsSync(decryptedFile)) {
+                    console.error('File not found:', decryptedFile);
+                    process.exit(1);
+                }
+                for (let index in jsoncrypt['files']) {
+                    if (!fs.existsSync(index)) {
+                        continue
+                    }
+                    if (fs.realpathSync(decryptedFile) === fs.realpathSync(index)) {
+                        key = jsoncrypt['files'][index];
+                    }
+                }
 
-            var encryptedUrl = xorEncryptDecrypt(url, key);
-            var encodedUrl = base64Encode(encryptedUrl);
+                var json = fs.readFileSync(decryptedFile, 'utf8');
+                var encyptedJson = xorEncryptDecrypt(json, key);
+                fs.writeFileSync(encryptedFile, base64Encode(encyptedJson));
+            } else if (command !== 'decrypt') {
 
-            console.log(`URL cifrato: ${encodedUrl}`);
+            } else {
+                usage()
+            }
+
 
         } else {
             // Node.js as module
