@@ -1,6 +1,6 @@
 <div align="center">
 
-![DevOps Score](assets/images/logo.svg)
+![DevOps Score](assets/images/logo.png)
 
 # DevOps Score
 
