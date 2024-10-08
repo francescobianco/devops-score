@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DevOps Score - Le migliori aziende DevOps italiane</title>
+    <title>DevOps Score - Le migliori realtà DevOps italiane</title>
     <style>
         body {
             font-family: 'Arial', sans-serif;
@@ -17,6 +17,7 @@
         .header {
             text-align: center;
             margin-bottom: 30px;
+            padding-top: 20px;
         }
         .logo {
             max-width: 150px;
@@ -25,6 +26,7 @@
         h1 {
             color: #2c3e50;
             margin-bottom: 10px;
+            margin-top: -10px;
         }
         .subtitle {
             font-size: 18px;
@@ -124,7 +126,6 @@
             margin-top: 20px;
             text-align: center;
             border: 1px solid #e0e0e0;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
         .result-card h3 {
             color: #2c3e50;
@@ -135,7 +136,7 @@
             border-radius: 6px;
             padding: 15px;
             margin-bottom: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            border: 1px solid #e0e0e0;
         }
         .result-score {
             font-size: 48px;
@@ -150,15 +151,16 @@
         .cta-button {
             padding: 15px 30px;
             font-size: 18px;
-            background-color: #e74c3c;
+            background-color: #28a745;
             color: white;
             border: none;
             border-radius: 6px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            text-decoration: none;
         }
         .cta-button:hover {
-            background-color: #c0392b;
+            background-color: #5cd06f;
         }
         .cta-info {
             font-size: 14px;
@@ -189,7 +191,7 @@
 <div class="header">
     <img src="assets/images/logo.svg" alt="Logo DevOps Score" class="logo">
     <h1>DevOps Score</h1>
-    <p class="subtitle">Classifica delle migliori aziende DevOps italiane</p>
+    <p class="subtitle">Classifica delle migliori realtà DevOps italiane</p>
 </div>
 
 <div class="container">
@@ -197,7 +199,7 @@
 </div>
 
 <div class="search-box">
-    <h2>Verifica il tuo punteggio DevOps</h2>
+    <h2>Verifica il tuo DevOps Score</h2>
     <input type="text" id="accessCode" placeholder="Inserisci il tuo codice di accesso">
     <button onclick="checkScore()">Verifica</button>
     <p class="search-info">Per richiedere un codice di accesso, invia una mail a info.francescobianco@gmail.com</p>
@@ -209,7 +211,7 @@
         <div class="result-score" id="companyScore">87</div>
         <div class="result-rank">Posizione in classifica: <strong id="companyRank">4°</strong></div>
     </div>
-    <button class="cta-button" onclick="openCalendar()">Prenota una consulenza gratuita</button>
+    <a href="https://calendar.yafb.net" target="_blank" class="cta-button">Prenota una consulenza gratuita 👉📅</a>
     <p class="cta-info">Clicca qui per prenotare una consulenza gratuita con Francesco Bianco</p>
 </div>
 
@@ -256,11 +258,24 @@
     }
 
     function checkScore() {
-        document.getElementById('result').style.display = 'block';
+        const result = document.getElementById('result');
+        const accessCode = (document.getElementById('accessCode').value + '').trim();
+        console.log(accessCode, !accessCode , accessCode.length !== 8 , !accessCode.match(/^[0-9]+$/))
+        if (!accessCode || accessCode.length !== 8 || !accessCode.match(/^[0-9]+$/)) {
+            alert('Inserisci un codice di accesso valido');
+            return;
+        }
+
+        result.style.display = 'block';
+        scrollTo(result)
     }
 
-    function openCalendar() {
-        alert('Apertura del calendario per prenotare una consulenza con Francesco Bianco');
+    function scrollTo(element) {
+        window.scroll({
+            behavior: 'smooth',
+            left: 0,
+            top: element.offsetTop
+        });
     }
 
     document.addEventListener('DOMContentLoaded', renderCompanies);
