@@ -79,7 +79,6 @@
 
     if (typeof module !== 'undefined' && module.exports) {
         var fs = require('fs');
-        var jsoncrypt = JSON.parse(fs.readFileSync('jsoncrypt.json', 'utf8'));
 
         if (require.main === module) {
             // Node.js as entry point
