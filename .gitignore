@@ -3,4 +3,4 @@
 jsoncrypt.json
 *.dec.json
 .env
-
+secrets.txt
