@@ -37,26 +37,6 @@
         }
     }
 
-    function getEncryptedFile(file) {
-        if (file.endsWith('.enc.json')) {
-            return file;
-        } else if (file.endsWith('.dec.json')) {
-            return file.replace('.dec.json', '.enc.json');
-        }
-
-        return file.replace('.json', '.enc.json');
-    }
-
-    function getDecryptedFile(file) {
-        if (file.endsWith('.dec.json')) {
-            return file;
-        } else if (file.endsWith('.enc.json')) {
-            return file.replace('.enc.json', '.dec.json');
-        }
-
-        return file.replace('.json', '.dec.json');
-    }
-
     function jsonCryptFetch(url, key) {
         const encryptedFile = getEncryptedFile(url);
 
@@ -73,7 +53,7 @@
     }
 
     function usage() {
-        console.error('Usage: node jsoncrypt.js [encrypt|decrypt] <file>');
+        console.error('Usage: node jsoncrypt.js [encrypt|decrypt] <file> <key>');
         process.exit(1);
     }
 
@@ -91,33 +71,23 @@
 
             var command = args[0];
             var file = args[1];
-            var encryptedFile = file.replace('.dec.json', '.enc.json');
-            var decryptedFile = file.replace('.enc.json', '.dec.json');
-            var key = '';
-            if (command === 'encrypt') {
-                if (!fs.existsSync(decryptedFile)) {
-                    console.error('File not found:', decryptedFile);
-                    process.exit(1);
-                }
-                for (let index in jsoncrypt['files']) {
-                    if (!fs.existsSync(index)) {
-                        continue
-                    }
-                    if (fs.realpathSync(decryptedFile) === fs.realpathSync(index)) {
-                        key = jsoncrypt['files'][index];
-                    }
-                }
+            var key = args[2];
 
-                var json = fs.readFileSync(decryptedFile, 'utf8');
-                var encyptedJson = xorEncryptDecrypt(json, key);
-                fs.writeFileSync(encryptedFile, base64Encode(encyptedJson));
-            } else if (command !== 'decrypt') {
-
-            } else {
-                usage()
+            if (["encrypt", "decrypt"].indexOf(command) === -1) {
+                usage();
             }
 
+            if (!fs.existsSync(file)) {
+                console.error('File not found:', file);
+                process.exit(1);
+            }
 
+            var data = fs.readFileSync(file, 'utf8');
+            if (command === 'encrypt') {
+                console.log(base64Encode(xorEncryptDecrypt(data, key)));
+            } else {
+                console.log(xorEncryptDecrypt(base64Decode(data), key));
+            }
         } else {
             // Node.js as module
             module.exports = myFunction;

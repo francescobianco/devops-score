@@ -1,6 +1,5 @@
 .idea/
 .vscode/
-jsoncrypt.json
-*.dec.json
 .env
+secrets/**/*.json
 secrets.txt
