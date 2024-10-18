@@ -62,7 +62,6 @@
 
         if (require.main === module) {
             // Node.js as entry point
-
             var args = process.argv.slice(2);
 
             if (args.length < 2) {
@@ -90,10 +89,10 @@
             }
         } else {
             // Node.js as module
-            module.exports = myFunction;
+            module.exports = cryptFetch;
         }
     } else {
         // Browser
-        global.jsonCryptFetch = jsonCryptFetch;
+        global.cryptFetch = cryptFetch;
     }
 })(typeof window !== 'undefined' ? window : global);

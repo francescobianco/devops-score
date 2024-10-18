@@ -225,11 +225,11 @@
     <p>Creato da Francesco Bianco</p>
 </div>
 
-<script src="assets/js/jsoncrypt.js"></script>
+<script src="assets/js/crypt.js"></script>
 <script>
     function renderCompanies() {
 
-        jsonCryptFetch('assets/data/companies/01/01.json', '01568725')
+        cryptFetch('assets/data/companies/01/01.enc', '01568725')
             .then(data => {
                 console.log("data:", data)
             });
