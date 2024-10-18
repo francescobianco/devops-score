@@ -185,6 +185,10 @@
             font-size: 14px;
             color: #7f8c8d;
         }
+        .company-details {
+            display: flex;
+            align-items: center;
+        }
     </style>
 </head>
 <body>
@@ -206,11 +210,28 @@
 </div>
 
 <div id="result" class="result-card" style="display: none;">
-    <h3>Risultato della verifica</h3>
+    <h3>Ecco il tuo score</h3>
     <div class="result-info">
         <div class="result-score" id="companyScore">87</div>
+        <div class="company-details">
+            <img src="" alt="Logo Aziendale" class="company-logo" id="companyLogo">
+            <div class="rank-info" id="companyName"></div>
+        </div>
         <div class="result-rank">Posizione in classifica: <strong id="companyRank">4°</strong></div>
     </div>
+
+    <div class="comparison-section">
+        <h3 class="comparison-title">Benchmark Settoriale:</h3>
+        <div class="competitor">
+            <img src="/api/placeholder/30/30" alt="Logo TechCorp" class="competitor-logo">
+            <span><strong>TechCorp:</strong> Score 98 (<span class="percentage">+11.2% rispetto al tuo</span>)</span>
+        </div>
+        <div class="competitor">
+            <img src="/api/placeholder/30/30" alt="Logo InnovaSolutions" class="competitor-logo">
+            <span><strong>InnovaSolutions:</strong> Score 95 (<span class="percentage">+8.4% rispetto al tuo</span>)</span>
+        </div>
+    </div>
+
     <a href="https://calendar.yafb.net" target="_blank" class="cta-button">Prenota una consulenza gratuita 👉📅</a>
     <p class="cta-info">Clicca qui per prenotare una consulenza gratuita con un esperto DevOps</p>
 </div>
@@ -228,16 +249,8 @@
 <script src="assets/js/crypt.js"></script>
 <script>
     function renderCompanies() {
-
-        cryptFetch('assets/data/companies/01/01.enc', '01568725')
-            .then(data => {
-                console.log("data:", data)
-            });
-
-
-
         const container = document.getElementById('companies');
-        fetch('assets/data/rank/top3.json')
+        fetch('assets/data/ranking/top3.json')
             .then(response => response.json())
             .then(data => {
                 data.forEach((company, index) => {
@@ -258,16 +271,31 @@
     }
 
     function checkScore() {
+        const errorMessage = 'Inserisci un codice di accesso valido';
         const result = document.getElementById('result');
         const accessCode = (document.getElementById('accessCode').value + '').trim();
-        console.log(accessCode, !accessCode , accessCode.length !== 8 , !accessCode.match(/^[0-9]+$/))
+        const id = accessCode.substring(1, 3);
+
         if (!accessCode || accessCode.length !== 8 || !accessCode.match(/^[0-9]+$/)) {
-            alert('Inserisci un codice di accesso valido');
+            alert(errorMessage);
             return;
         }
 
-        result.style.display = 'block';
-        scrollTo(result)
+        decryptFetch('assets/data/secrets/' + id + '/' + id + '.enc', accessCode)
+            .then(data => {
+                try {
+                    data = JSON.parse(data);
+                    console.log(data);
+                    document.getElementById('companyName').innerText = data.name;
+                    document.getElementById('companyScore').innerText = data.score;
+                    document.getElementById('companyLogo').src = data.logo;
+                    result.style.display = 'block';
+                    scrollTo(result)
+                } catch (error) {
+                    alert(errorMessage);
+                    console.error(error);
+                }
+            });
     }
 
     function scrollTo(element) {
@@ -280,8 +308,8 @@
 
     document.addEventListener('DOMContentLoaded', renderCompanies);
 
-
-
+    document.getElementById('accessCode').value = '10198565';
+    checkScore()
 </script>
 </body>
 </html>

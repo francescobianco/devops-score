@@ -15,40 +15,28 @@
 
     function base64Encode(str) {
         if (typeof Buffer !== 'undefined') {
-            // Siamo in Node.js
             return Buffer.from(str, 'binary').toString('base64');
         } else if (typeof btoa !== 'undefined') {
-            // Siamo nel browser
             return btoa(unescape(encodeURIComponent(str)));
         } else {
             throw new Error('Ambiente non supportato per base64Encode');
         }
     }
 
-    // Funzione per decodificare da base64
     function base64Decode(str) {
         if (typeof Buffer !== 'undefined') {
             return Buffer.from(str, 'base64').toString('binary');
         } else if (typeof atob !== 'undefined') {
-            console.log('atob', str)
             return decodeURIComponent(escape(atob(str)));
         } else {
             throw new Error('Ambiente non supportato per base64Decode');
         }
     }
 
-    function jsonCryptFetch(url, key) {
-        const encryptedFile = getEncryptedFile(url);
-
-        return fetch(encryptedFile).then(async response => {
+    function decryptFetch(url, key) {
+        return fetch(url).then(async response => {
             const data = await response.text()
-            const decryptedData = xorEncryptDecrypt(base64Decode(data), key);
-            console.log("decryptedData", decryptedData)
-            const json = JSON.parse(decryptedData)
-
-            if (typeof json === 'object') {
-                return json
-            }
+            return xorEncryptDecrypt(base64Decode(data), key);
         })
     }
 
@@ -89,10 +77,10 @@
             }
         } else {
             // Node.js as module
-            module.exports = cryptFetch;
+            module.exports = decryptFetch;
         }
     } else {
         // Browser
-        global.cryptFetch = cryptFetch;
+        global.decryptFetch = decryptFetch;
     }
 })(typeof window !== 'undefined' ? window : global);
