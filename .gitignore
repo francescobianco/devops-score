@@ -1,5 +1,4 @@
 .idea/
 .vscode/
-.env
-secrets/**/*.json
 secrets.txt
+.env
