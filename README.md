@@ -66,7 +66,7 @@ Un punteggio DevOps più alto indica un'azienda più avanzata nell'adozione dell
 
 Il calcolo del punteggio DevOps offre un indicatore chiaro della maturità DevOps di un'azienda. Esso aiuta a identificare punti di forza e debolezze nelle pratiche DevOps e fornisce indicazioni su come migliorare la qualità e l'efficienza delle operazioni aziendali.
 
-Consulta subito la classifica delle migliori realtà visita il sito [DevOps Score](https://devops.yafb.net).
+Consulta subito la classifica delle migliori realtà, visita il sito <https://devops.yafb.net>.
 
 ## Licenza
 
