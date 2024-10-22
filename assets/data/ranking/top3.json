@@ -1,20 +1,20 @@
 [
   {
-    "name": "InnovaTech Solutions",
-    "description": "Leader nell'automazione e nell'integrazione continua",
+    "name": "Mia-Platform",
+    "description": "Don’t waste time setting up your platform, just push the code!",
     "score": 95,
-    "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQGJJJpYtP0Umw/company-logo_100_100/company-logo_100_100/0/1698561224994?e=1735171200&v=beta&t=3bDC7qsXNX6yrlfNx74YRvRLOKusQwoclIk_oqkdhCA"
+    "logo": "https://media.licdn.com/dms/image/v2/C4D0BAQEgB783mnzaFw/company-logo_200_200/company-logo_200_200/0/1673863245731/mia_platform_logo?e=1737590400&v=beta&t=vO7jkvE61FjdNmYv0_vBgoazcIlRHPbbpIi2vtramoY"
   },
   {
-    "name": "CloudMasters Italia",
-    "description": "Esperti in infrastrutture cloud e containerizzazione",
+    "name": "SparkFabrik",
+    "description": "We design and build Cloud-Native applications, cloud systems and infrastructures",
     "score": 92,
-    "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQGJJJpYtP0Umw/company-logo_100_100/company-logo_100_100/0/1698561224994?e=1735171200&v=beta&t=3bDC7qsXNX6yrlfNx74YRvRLOKusQwoclIk_oqkdhCA"
+    "logo": "https://media.licdn.com/dms/image/v2/C4E0BAQFzJqg1AMGiLg/company-logo_200_200/company-logo_200_200/0/1630570321096/sparkfabrik_logo?e=1737590400&v=beta&t=0KWwA4lo3xTD09a55H5IrxDV4ZDl3-Xcc_oXsAkWhB4"
   },
   {
-    "name": "Agile DevOps Hub",
-    "description": "Pionieri nelle metodologie Agile e DevOps",
+    "name": "Kiratech",
+    "description": "Cloud Native Enabler",
     "score": 88,
-    "logo": "https://media.licdn.com/dms/image/v2/D4E0BAQGJJJpYtP0Umw/company-logo_100_100/company-logo_100_100/0/1698561224994?e=1735171200&v=beta&t=3bDC7qsXNX6yrlfNx74YRvRLOKusQwoclIk_oqkdhCA"
+    "logo": "https://media.licdn.com/dms/image/v2/C4D0BAQGunZcU05w6hw/company-logo_200_200/company-logo_200_200/0/1678979885569/kiratech_spa_logo?e=1737590400&v=beta&t=j5u_hgEwzt5ZnKwKWKTAsUEdhHL0K2PtY5KtwSrFomY"
   }
 ]
