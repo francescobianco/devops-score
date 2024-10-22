@@ -1,3 +1,4 @@
+#!make
 
 SHELL := /bin/bash
 
