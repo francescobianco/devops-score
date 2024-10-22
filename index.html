@@ -63,6 +63,7 @@
             border-radius: 50%;
             background-color: #ecf0f1;
             border: 2px solid #3498db;
+            flex-shrink: 0;
         }
         .info {
             flex-grow: 1;
@@ -80,6 +81,7 @@
             font-size: 20px;
             font-weight: bold;
             color: #27ae60;
+            padding-left: 10px;
         }
         .company-logo {
             width: 50px;
@@ -129,7 +131,7 @@
         }
         .result-card h3 {
             color: #2c3e50;
-            margin-bottom: 20px;
+            margin: 0 0 10px 0;
         }
         .result-info {
             background-color: white;
@@ -198,6 +200,28 @@
             color: #7f8c8d;
             margin: 0 40px 20px;
         }
+        .comparison-title {
+            border-bottom: 1px solid #e0e0e0;
+            margin: 0 0 10px;
+        }
+        .comparison-section {
+            line-height: 36px;
+        }
+        .competitor-logo {
+            width: 24px;
+            height: 24px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            vertical-align: middle;
+            margin-top: -4px;
+        }
+        .competitor-score {
+            font-weight: bold;
+            color: #5cd06f;
+        }
+        .rank-info {
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
@@ -219,30 +243,30 @@
 </div>
 
 <div id="result" class="result-card" style="display: none;">
-    <h3>Ecco il tuo score</h3>
+    <h3>Abbiamo stimato il tuo DevOps Score</h3>
     <div class="result-info">
         <div class="result-score" id="companyScore">87</div>
         <div class="company-details">
             <img src="" alt="Logo Aziendale" class="company-logo" id="companyLogo">
             <div class="rank-info" id="companyName"></div>
         </div>
-        <div class="result-rank">Posizione in classifica: <strong id="companyRank">4°</strong></div>
+        <!--div class="result-rank">Posizione in classifica: <strong id="companyRank">4°</strong></div-->
     </div>
 
     <div class="comparison-section">
         <h3 class="comparison-title">Ecco le migliori realtà nel tuo settore</h3>
         <div class="competitor">
             <img src="" alt="" class="competitor-logo" id="competitorLogo1">
-            <span><strong>TechCorp:</strong> Score 98 (<span class="percentage">migliore del +11.2% rispetto al tuo</span>)</span>
+            <span><strong id="competitorName1">A</strong>: Score <span class="competitor-score" id="competitorScore1">98</span> (<span class="percentage" id="competitorStats1">migliore del +11.2% rispetto al tuo</span>)</span>
         </div>
         <div class="competitor">
             <img src="" alt="" class="competitor-logo" id="competitorLogo2">
-            <span><strong>InnovaSolutions:</strong> Score 95 (<span class="percentage">migliore del +8.4% rispetto al tuo</span>)</span>
+            <span><strong id="competitorName2">B</strong>: Score <span class="competitor-score" id="competitorScore2">95</span> (<span class="percentage" id="competitorStats2">migliore del +8.4% rispetto al tuo</span>)</span>
         </div>
     </div>
 
     <p class="cta-message">
-        Le aziende migliori nel tuo settore hanno già raggiunto questi risultati. Scopri quali fattori stanno abbassando il tuo score e come lavorare per migliorarlo, aumentando così la qualità del tuo lavoro. Non perdere l'opportunità di risparmiare tempo e denaro!
+        Le migliori realtà del settore hanno già ottenuto questi risultati. Scopri cosa influisce sul tuo score e come migliorarlo per aumentare la qualità del tuo lavoro. Risparmia tempo e denaro!
     </p>
     <a href="https://calendar.yafb.net" target="_blank" class="cta-button">Prenota una consulenza 👉📅</a>
     <p class="cta-info">Clicca qui per prenotare una consulenza <strong>gratuita</strong> con un esperto DevOps</p>
@@ -297,10 +321,25 @@
             .then(data => {
                 try {
                     data = JSON.parse(data);
-                    console.log(data);
+
+                    const difference1 = Math.round((data.competitors[0].score - data.score) / data.score * 100);
+                    const difference2 = Math.round((data.competitors[1].score - data.score) / data.score * 100);
+
                     document.getElementById('companyName').innerText = data.name;
                     document.getElementById('companyScore').innerText = data.score;
                     document.getElementById('companyLogo').src = data.logo;
+
+                    document.getElementById('competitorName1').innerText = data.competitors[0].name;
+                    document.getElementById('competitorScore1').innerText = data.competitors[0].score;
+                    document.getElementById('competitorLogo1').src = data.competitors[0].logo;
+
+                    document.getElementById('competitorStats1').innerText = 'migliore del ' + difference1 + '% rispetto al tuo';
+
+                    document.getElementById('competitorName2').innerText = data.competitors[1].name;
+                    document.getElementById('competitorScore2').innerText = data.competitors[1].score;
+                    document.getElementById('competitorLogo2').src = data.competitors[1].logo;
+                    document.getElementById('competitorStats2').innerText = 'migliore del ' + difference2 + '% rispetto al tuo';
+
                     result.style.display = 'block';
                     scrollTo(result)
                 } catch (error) {
