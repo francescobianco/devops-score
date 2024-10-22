@@ -11,6 +11,7 @@ pull:
 	@make -s decrypt
 
 manage:
+	@echo "Curiosone ;-) chissà cosa contiene questo link..."
 	@echo "Open manage page: <https://docs.google.com/spreadsheets/d/1T2rr_RUggcaVfvdS2pdKAq0A1kkwLsHrD1b9HLuoWog/edit?gid=0#gid=0>"
 
 server:

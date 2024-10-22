@@ -71,3 +71,5 @@ Consulta subito la classifica delle migliori realtà, visita il sito <https://de
 ## Licenza
 
 Questo documento è rilasciato sotto licenza Creative Commons Attribution-ShareAlike 4.0 International (CC BY-SA 4.0). Per leggere una copia della licenza, visita il sito web [Creative Commons](https://creativecommons.org/licenses/by-sa/4.0/).
+
+<!-- Follow the white rabbit -->

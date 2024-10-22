@@ -1,3 +1,8 @@
+/**
+ * BENISSIMO!!!
+ *
+ * Se stai leggendo questo commento, significa che hai aperto il file, e quindi stai cercando di capire come funziona il codice.
+ */
 (function (global) {
     function xorEncryptDecrypt(input, key) {
         let output = '';
