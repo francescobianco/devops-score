@@ -17,14 +17,14 @@ manage:
 server:
 	@sleep 1 && echo -e -n "--- \r\nOpen this page: <http://localhost:8080>\r\n---\r\n" &
 	@docker stop $$(docker ps -q --filter "publish=8080") || true
-	@docker run --rm -it -v $${PWD}:/usr/share/nginx/html:ro -p 8080:80 nginx:alpine
+	@docker run --rm -it -v $${PWD}/docs:/usr/share/nginx/html:ro -p 8080:80 nginx:alpine
 
 encrypt:
 	@while read s; do [ -n "$$s" ] && \
-		node assets/js/crypt encrypt "assets/data/secrets/$${s:1:2}/$${s:1:2}.json" "$$s" \
-			> "assets/data/secrets/$${s:1:2}/$${s:1:2}.enc" || true; done < secrets.txt
+		node docs/assets/js/crypt encrypt "docs/assets/data/secrets/$${s:1:2}/$${s:1:2}.json" "$$s" \
+			> "docs/assets/data/secrets/$${s:1:2}/$${s:1:2}.enc" || true; done < secrets.txt
 
 decrypt:
 	@while read s; do [ -n "$$s" ] && \
-		node assets/js/crypt decrypt "assets/data/secrets/$${s:1:2}/$${s:1:2}.enc" "$$s" \
-			> "assets/data/secrets/$${s:1:2}/$${s:1:2}.json" || true; done < secrets.txt
+		node docs/assets/js/crypt decrypt "docs/assets/data/secrets/$${s:1:2}/$${s:1:2}.enc" "$$s" \
+			> "docs/assets/data/secrets/$${s:1:2}/$${s:1:2}.json" || true; done < secrets.txt

@@ -365,8 +365,11 @@
 
     document.addEventListener('DOMContentLoaded', renderCompanies);
 
-    document.getElementById('accessCode').value = '10198565';
-    checkScore()
+    // Questo codice è stato lasciato qui per farti sognare...
+    if (window.location.host == 'localhost:8080') {
+        document.getElementById('accessCode').value = '10198565';
+        checkScore()
+    }
 </script>
 <!-- 100% privacy-first analytics -->
 <script async defer src="https://scripts.simpleanalyticscdn.com/latest.js"></script>
